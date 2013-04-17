@@ -1,0 +1,14 @@
+Changes for perl module Data::File::Map
+
+
+0.02.1
+
+Fixed bug in "read_file" method
+
+0.02.0
+
+Added "read_file" method
+
+0.01.0
+
+Initial release
