@@ -1,5 +1,8 @@
 package Data::File::Map;
 {
+  $Data::File::Map::VERSION = '0.04';
+}
+{
   $Data::File::Map::VERSION = '0.02.1';
 }
 
@@ -121,7 +124,9 @@ sub _parse_document {
                 
                 for my $field ( $node->getChildrenByTagName( 'field' ) ) {
                     
-                    my $name = $field->textContent;
+                    my $name = $field->getAttribute('name') || $field->textContent;
+                    
+                    my $label = $field->getAttribute('label') ||  $field->textContent;
                     
                     my $position  = $field->getAttribute('position');
                     
@@ -135,7 +140,7 @@ sub _parse_document {
                     $w = $width if $width;
                     
                     if ( $pos && $w ) {
-                        my $item = [ $name, $pos, $w ];
+                        my $item = [ $name, $pos, $w, $label];
                         $self->add_field( $item );
                     }
                     else {
@@ -151,6 +156,10 @@ sub _parse_document {
 }
 
 
+
+
+
+## DEPRECREATE THESE FUNCTIONS
 sub read {
     my ( $self, $line ) = @_;
     
@@ -166,9 +175,10 @@ sub read {
         delete $rec{''};
     }
     elsif ( $self->format eq 'text' ) {
-        
+        no warnings;
         @rec{ $self->field_names } = map {
             my $val = substr( $line, $_->[1] - 1, $_->[2] );
+            $val ||= '';
             $val =~ s/^\s+//;
             $val =~ s/\s+$//;
             $val;

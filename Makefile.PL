@@ -9,7 +9,7 @@ use ExtUtils::MakeMaker 6.30;
 
 
 my %WriteMakefileArgs = (
-  "ABSTRACT" => "Read data file definitions stored as XML\r",
+  "ABSTRACT" => "Read data file definitions stored as XML",
   "AUTHOR" => "Jeffrey Ray Hallock <jeffrey.hallock\@gmail.com>",
   "BUILD_REQUIRES" => {},
   "CONFIGURE_REQUIRES" => {
@@ -26,7 +26,7 @@ my %WriteMakefileArgs = (
     "XML::LibXML" => 0
   },
   "TEST_REQUIRES" => {},
-  "VERSION" => "0.02.1",
+  "VERSION" => "0.04",
   "test" => {
     "TESTS" => "t/*.t"
   }
