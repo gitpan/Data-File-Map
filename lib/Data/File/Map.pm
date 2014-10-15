@@ -1,18 +1,22 @@
 package Data::File::Map;
-{
-  $Data::File::Map::VERSION = '0.04';
-}
-{
-  $Data::File::Map::VERSION = '0.02.1';
-}
-
+$Data::File::Map::VERSION = '0.05';
 use Moose;
 use MooseX::StrictConstructor;
 use MooseX::SemiAffordanceAccessor;
 
 use Moose::Util::TypeConstraints;
 
+use Data::File::Map::Field;
+
 use XML::LibXML;
+
+
+class_type 'Data::File::Map';
+
+coerce 'Data::File::Map',
+     from 'Str',
+     via { Data::File::Map->new_from_file( $_ ) };
+
 
 has 'format' => (        # can be text or csv
     is => 'rw',
@@ -33,10 +37,43 @@ has 'fields' => (
     default => sub { [ ] },
     handles => {
         'add_field' => 'push',
-        'fields' => 'elements',
+        '_fields' => 'elements',
     },
     lazy => 1,
 );
+
+has '_xfields' => (
+    is => 'bare',
+    isa => 'ArrayRef',
+    traits => [qw( Array )],
+    handles => {
+        '_xfields' => 'elements',
+    },
+    default => sub {
+      [
+        map {
+          my %field_data;
+          @field_data{qw[name position width label]} = ( @$_ );
+          Data::File::Map::Field->new(  %field_data );
+         } $_[0]->fields
+      ]
+    },
+    lazy => 1,
+);
+
+sub fields {
+
+  my ( $self, $want_objects ) = @_;
+  
+  if ( $want_objects ) {
+    return $self->_xfields;
+  }
+  else {
+    return $self->_fields;
+  }
+  
+
+}
 
 
 sub field_names {
