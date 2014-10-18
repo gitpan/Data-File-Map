@@ -1,5 +1,5 @@
 package Data::File::Map;
-$Data::File::Map::VERSION = '0.05';
+$Data::File::Map::VERSION = '0.06';
 use Moose;
 use MooseX::StrictConstructor;
 use MooseX::SemiAffordanceAccessor;
@@ -78,6 +78,18 @@ sub fields {
 
 sub field_names {
     map { $_->[0] } $_[0]->fields;
+}
+
+sub get_field {
+  
+  my ( $self, $name) = @_;
+  
+  for my $field ( $self->fields(1) ) {
+    
+        return $field if $field->name eq $name;
+    
+  }
+  
 }
 
 
@@ -328,6 +340,10 @@ will only be defined in C<text> files.
 =item field_names
 
 Returns a list of field names in the order defined in the definition file.
+
+=item get_field $name
+
+Returns the L<Data::File::Map::Field> object with the given name.
 
 =item new
 

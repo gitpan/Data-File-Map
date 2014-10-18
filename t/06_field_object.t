@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 
-use Test::More tests => 3;
+use Test::More tests => 4;
 
 
 use_ok('Data::File::Map::Field');
@@ -20,6 +20,8 @@ my $map = Data::File::Map->new_from_file( 't/data/text.xml' );
 my @fields = $map->fields(1);
 
 isa_ok ( $fields[0], 'Data::File::Map::Field' );
+
+ok ( $map->get_field('id'), 'retrieved id field');
 
 
 

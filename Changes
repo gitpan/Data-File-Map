@@ -1,6 +1,8 @@
 Changes for perl module Data::File::Map
 
 
+0.06      2014-10-17 22:32:40
+
 0.05      2014-10-15 09:26:15
 - Added type coercion to for moose attributes of type Data::File::Map. Will
 coerce Str to a Data::File::Map instance using new_from_file constructor
