@@ -1,5 +1,5 @@
 package Data::File::Map::Field;
-$Data::File::Map::Field::VERSION = '0.08';
+$Data::File::Map::Field::VERSION = '0.09';
 {
   $Data::File::Map::Field::VERSION = '0.02.1';
 }
@@ -16,7 +16,7 @@ has 'name' => (
 
 has 'label' => (
     is => 'rw',
-    isa => 'Str',
+    isa => 'Str|Undef',
     default => '',
 );
 

@@ -1,6 +1,8 @@
 Changes for perl module Data::File::Map
 
 
+0.09      2014-11-12 23:42:45
+
 0.08      2014-11-12 23:20:57
 - bug fix with add field
 

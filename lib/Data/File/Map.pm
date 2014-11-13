@@ -1,5 +1,5 @@
 package Data::File::Map;
-$Data::File::Map::VERSION = '0.08';
+$Data::File::Map::VERSION = '0.09';
 use Moose;
 use MooseX::StrictConstructor;
 use MooseX::SemiAffordanceAccessor;
