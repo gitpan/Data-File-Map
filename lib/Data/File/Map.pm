@@ -1,5 +1,5 @@
 package Data::File::Map;
-$Data::File::Map::VERSION = '0.07';
+$Data::File::Map::VERSION = '0.08';
 use Moose;
 use MooseX::StrictConstructor;
 use MooseX::SemiAffordanceAccessor;
@@ -89,7 +89,7 @@ sub add_field {
     # create array to store fields
     my @values = map { exists $args[1]{$_} ? $args[1]{$_} : undef } qw/position width label/;
     
-    self->_add_field( [ $args[0], @values ] );
+    $self->_add_field( [ $args[0], @values ] );
   }
   # if just a string
   elsif ( @args == 1 && is_Str($args[0])  ) {
