@@ -15,5 +15,6 @@ t/03_text_from_file.t
 t/04_text_from_string.t
 t/05_type_coercion.t
 t/06_field_object.t
+t/07_map_no_xml.t
 t/data/csv.xml
 t/data/text.xml

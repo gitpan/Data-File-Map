@@ -1,7 +1,11 @@
 Changes for perl module Data::File::Map
 
 
+0.07      2014-11-12 21:49:22
+- add_field method now accepts a string or string and hashref
+
 0.06      2014-10-17 22:32:40
+- Added get_field method
 
 0.05      2014-10-15 09:26:15
 - Added type coercion to for moose attributes of type Data::File::Map. Will

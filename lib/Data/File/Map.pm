@@ -1,10 +1,11 @@
 package Data::File::Map;
-$Data::File::Map::VERSION = '0.06';
+$Data::File::Map::VERSION = '0.07';
 use Moose;
 use MooseX::StrictConstructor;
 use MooseX::SemiAffordanceAccessor;
 
 use Moose::Util::TypeConstraints;
+use MooseX::Types::Moose qw( ArrayRef Str HashRef );
 
 use Data::File::Map::Field;
 
@@ -36,7 +37,7 @@ has 'fields' => (
     traits => [qw( Array )],
     default => sub { [ ] },
     handles => {
-        'add_field' => 'push',
+        '_add_field' => 'push',
         '_fields' => 'elements',
     },
     lazy => 1,
@@ -72,8 +73,41 @@ sub fields {
     return $self->_fields;
   }
   
-
 }
+
+sub add_field {
+  
+  my ( $self, @args ) = @_;
+  
+  # if an ArrayRef is given
+  if ( @args == 1 && is_ArrayRef($args[0]) ) {
+    $self->_add_field( $args[0] );
+  }
+  # if is a String and a HashRef
+  elsif ( @args == 2 && is_Str($args[0]) && is_HashRef( $args[1] )  ) {
+    
+    # create array to store fields
+    my @values = map { exists $args[1]{$_} ? $args[1]{$_} : undef } qw/position width label/;
+    
+    self->_add_field( [ $args[0], @values ] );
+  }
+  # if just a string
+  elsif ( @args == 1 && is_Str($args[0])  ) {
+    
+    $self->_add_field( [ $args[0] ] );
+    
+  }
+
+
+  else {
+    die "Could not add field, unknown argument format.";
+  }
+  
+  return 
+  
+}
+
+
 
 
 sub field_names {
@@ -307,7 +341,7 @@ for formatted ascii files.
 
 =over 4
 
-=item isa: String['text'|'csv']
+=item isa: Str['text'|'csv']
 
 =item default: csv
 
@@ -331,11 +365,22 @@ Used to separate variables in a csv file. This is a regular expression.
 
 =over 4
 
-=item fields
+=item add_field \@attributes
+
+Attribute order is name, position, width, label;
+
+=item add_field $name, [\%attributes]
+
+Add a field to the map. If C<\%attributes> is supplied, the position, width, and label
+attributes will be stored.
+
+=item fields [$want_objects]
 
 Returns a list of ArrayRefs containing information about the fields in the definition.
 The format off the ArrayRefs is C<[$field_name, $position, $width]>. Position and width
-will only be defined in C<text> files.
+will only be defined in C<text> files. If C<$want_objects> will return a list of
+C<Data::File::Map::Field> objects.
+
 
 =item field_names
 

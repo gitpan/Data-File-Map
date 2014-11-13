@@ -25,7 +25,7 @@ my %WriteMakefileArgs = (
     "MooseX::StrictConstructor" => 0,
     "XML::LibXML" => 0
   },
-  "VERSION" => "0.06",
+  "VERSION" => "0.07",
   "test" => {
     "TESTS" => "t/*.t"
   }

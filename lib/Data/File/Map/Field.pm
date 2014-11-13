@@ -1,5 +1,5 @@
 package Data::File::Map::Field;
-$Data::File::Map::Field::VERSION = '0.06';
+$Data::File::Map::Field::VERSION = '0.07';
 {
   $Data::File::Map::Field::VERSION = '0.02.1';
 }
